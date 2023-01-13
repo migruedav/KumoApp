@@ -37,4 +37,14 @@ async def root():
 
 @app.get("/cal")
 async def add(id:int=Query(),cal:int=Query()):
-    return {'id':id,'cal':cal}
+    doc_ref = db.collection("alumnos")
+    doc = doc_ref.get()
+    doc_id = str
+    for i in doc:
+        alumno = i.to_dict()
+        if alumno['id']==id:
+            doc_id = i.id
+
+    alumno = db.collection("alumnos").document(doc_id)
+    alumno.update({'clases': firestore.ArrayUnion([cal])})
+    return 'Calificación añadida'
