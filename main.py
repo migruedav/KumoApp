@@ -47,4 +47,8 @@ async def add(id:int=Query(),cal:int=Query()):
 
     alumno = db.collection("alumnos").document(doc_id)
     alumno.update({'clases': firestore.ArrayUnion([cal])})
-    return 'Calificación añadida'
+
+    alum = db.collection("alumnos").document(doc_id).get().to_dict()
+    db.collection("alumnos").document(doc_id).set({'puntos':sum(alum['clases'])},merge=True)
+    
+    return 'Calificación añadida y total actualizado'
