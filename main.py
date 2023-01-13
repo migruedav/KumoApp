@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
+from fastapi import Query
 
 import firebase_admin
 from firebase_admin import credentials
@@ -33,3 +34,7 @@ db = firestore.client()
 @app.get("/")
 async def root():
     return {"message": "Hello World. Welcome to FastAPI!"}
+
+@app.get("/cal")
+async def add(id:int=Query(),cal:int=Query()):
+    return {'id':id,'cal':cal}
