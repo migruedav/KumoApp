@@ -52,9 +52,13 @@ async def add(id:int=Query(),cal:int=Query()):
         nueva_lista.append(i)
     nueva_lista.append(cal)
 
-    db.collection("alumnos").document(doc_id).set({'clases':nueva_lista},merge=True)
 
+
+    db.collection("alumnos").document(doc_id).set({'clases':nueva_lista},merge=True)
     alum = db.collection("alumnos").document(doc_id).get().to_dict()
-    db.collection("alumnos").document(doc_id).set({'puntos':sum(alum['clases']),'cantidad':len(alum['clases'])},merge=True)
+    puntos = sum(alum['clases'])
+    cantidad = len(alum['clases'])
+    porcentaje = puntos/(cantidad*20)
+    db.collection("alumnos").document(doc_id).set({'puntos':puntos,'cantidad':cantidad,'porcentaje':porcentaje},merge=True)
     
     return 'Calificación añadida y total actualizado'
