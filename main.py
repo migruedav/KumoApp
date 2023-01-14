@@ -55,6 +55,6 @@ async def add(id:int=Query(),cal:int=Query()):
     db.collection("alumnos").document(doc_id).set({'clases':nueva_lista},merge=True)
 
     alum = db.collection("alumnos").document(doc_id).get().to_dict()
-    db.collection("alumnos").document(doc_id).set({'puntos':sum(alum['clases'])},merge=True)
+    db.collection("alumnos").document(doc_id).set({'puntos':sum(alum['clases']),'cantidad':len(alum['clases'])},merge=True)
     
     return 'Calificación añadida y total actualizado'
