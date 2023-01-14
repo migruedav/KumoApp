@@ -45,8 +45,14 @@ async def add(id:int=Query(),cal:int=Query()):
         if alumno['id']==id:
             doc_id = i.id
 
-    alumno = db.collection("alumnos").document(doc_id)
-    alumno.update({'clases': firestore.ArrayUnion([cal])})
+    alumno = db.collection("alumnos").document(doc_id).get().to_dict()
+    lista = alumno['clases']
+    nueva_lista = list()
+    for i in lista:
+        nueva_lista.append(i)
+    nueva_lista.append(cal)
+
+    db.collection("alumnos").document(doc_id).set({'clases':nueva_lista},merge=True)
 
     alum = db.collection("alumnos").document(doc_id).get().to_dict()
     db.collection("alumnos").document(doc_id).set({'puntos':sum(alum['clases'])},merge=True)
