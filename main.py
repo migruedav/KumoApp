@@ -90,4 +90,5 @@ async def delete(id:int):
     clases.remove(clases[-1])
     db.collection('alumnos').document(doc_id).set({'clases':clases},merge=True)
 
+    add(id)
     return 'Ultima calificación borrada'
