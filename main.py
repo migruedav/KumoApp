@@ -78,3 +78,16 @@ async def add(id:int=Query()):
     db.collection("alumnos").document(doc_id).set({'puntos':puntos,'cantidad':cantidad,'porcentaje':porcentaje},merge=True)
     
     return 'Total actualizado'
+
+@app.get("/del")
+async def delete(id:int):
+
+    for i in db.collection('alumnos').get():
+        if i.to_dict()['id'] == id:
+            doc_id = i.id
+    doc = db.collection('alumnos').document(doc_id).get().to_dict()
+    clases = doc['clases']
+    clases.remove(clases[-1])
+    db.collection('alumnos').document(doc_id).set({'clases':clases},merge=True)
+
+    return 'Ultima calificación borrada'
