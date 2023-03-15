@@ -92,6 +92,8 @@ async def delete(id:int):
     clases.remove(clases[-1])
     db.collection('alumnos').document(doc_id).set({'clases':clases},merge=True)
 
-    url = f'https://fastapi-production-49c8.up.railway.app/total?id={id}'
-    requests.get(url)
+    puntos = sum(doc['clases'])
+    cantidad = len(doc['clases'])
+    porcentaje = puntos/(cantidad*20)
+    db.collection("alumnos").document(doc_id).set({'puntos':puntos,'cantidad':cantidad,'porcentaje':porcentaje},merge=True)
     return 'Ultima calificación borrada'
