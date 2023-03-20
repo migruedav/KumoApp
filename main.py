@@ -114,3 +114,9 @@ async def aapuntacal(nombre:str,caltotal:float):
                 db.collection('grupostorneo').document(i.id).set({'calif1':caltotal}, merge=True)
             else:
                 db.collection('grupostorneo').document(i.id).set({'calif2':caltotal}, merge=True)
+
+@app.get("/resetcals")
+async def resetcals(nombre:str):
+    for i in range(0,5):
+        db.collection('califtorneo').document(f'juez{i}').set({'nombre':nombre,'calificacion':0})
+    
