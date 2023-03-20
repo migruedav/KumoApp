@@ -101,6 +101,6 @@ async def delete(id:int):
 @app.get("/juezcal")
 async def delete(juez:int,caljuez:float):
 
-    db.collection('califtorneo').document(f'juez{juez}').set({'calificacion':caljuez})
+    db.collection('califtorneo').document(f'juez{juez}').set({'calificacion':caljuez},merge=True)
 
     return f"Calificación de juez{juez} es {caljuez}"
