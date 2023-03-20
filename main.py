@@ -117,6 +117,6 @@ async def aapuntacal(nombre:str,caltotal:float):
 
 @app.get("/resetcals")
 async def resetcals(nombre:str):
-    for i in range(0,5):
+    for i in range(1,6):
         db.collection('califtorneo').document(f'juez{i}').set({'nombre':nombre,'calificacion':0})
     
