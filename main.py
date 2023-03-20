@@ -99,8 +99,8 @@ async def delete(id:int):
     return 'Ultima calificación borrada'
 
 @app.get("/juezcal")
-async def delete(juez:int,cal:float):
+async def delete(juez:int,caljuez:float):
 
-    db.collection('califtorneo').document(f'juez{juez}').set({'calificacion':cal})
+    db.collection('califtorneo').document(f'juez{juez}').set({'calificacion':caljuez})
 
-    return f"Calificación de juez{juez} es {cal}"
+    return f"Calificación de juez{juez} es {caljuez}"
