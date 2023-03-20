@@ -97,3 +97,10 @@ async def delete(id:int):
     porcentaje = puntos/(cantidad*20)
     db.collection("alumnos").document(doc_id).set({'puntos':puntos,'cantidad':cantidad,'porcentaje':porcentaje},merge=True)
     return 'Ultima calificación borrada'
+
+@app.get("/juezcal")
+async def delete(juez:int,cal:int):
+
+    db.collection('califtorneo').document(f'juez{juez}').set({'calificacion':cal})
+
+    return f"Calificación de juez{juez} es {cal}"
