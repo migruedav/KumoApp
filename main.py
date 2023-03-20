@@ -110,12 +110,16 @@ async def aapuntacal(nombre:str,caltotal:float):
     data = db.collection('grupostorneo').get()
     for i in data:
         if i.to_dict()['nombre'] == nombre:
+            alumno_id = i.id
             if i.to_dict()['calif1']==0:
                 db.collection('grupostorneo').document(i.id).set({'calif1':caltotal}, merge=True)
             else:
                 db.collection('grupostorneo').document(i.id).set({'calif2':caltotal}, merge=True)
 
-            db.collection('grupostorneo').document(i.id).set({'total':i.to_dict()['calif1']+i.to_dict()['calif2']}, merge=True)
+    alumno = db.collection('grupostorneo').document(alumno_id).get()
+    cal1 = alumno.to_dict()['calif1']
+    cal2 = alumno.to_dict()['calif2']
+    db.collection('grupostorneo').document(alumno_id).set({'total':cal1+cal2}, merge=True)
 
 
 @app.get("/resetcals")
