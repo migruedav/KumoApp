@@ -106,5 +106,11 @@ async def juezcal(juez:int,caljuez:float):
     return f"Calificación de juez{juez} es {caljuez}"
 
 @app.get("/apuntarcal")
-async def aapuntacal(nombre:str,cal:float):
-    db.collection('grupostorneo').get()
+async def aapuntacal(nombre:str,caltotal:float):
+    data = db.collection('grupostorneo').get()
+    for i in data:
+        if i.to_dict()['nombre'] == nombre:
+            if i.to_dict()['calif1']==0:
+                db.collection('grupostorneo').document(i.id).set({'calif1':caltotal}, merge=True)
+            else:
+                db.collection('grupostorneo').document(i.id).set({'calif2':caltotal}, merge=True)
